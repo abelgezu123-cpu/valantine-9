@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine for Enu 💖</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: pink;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  #screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    width: 100vh;
+    height: 100vw;
+    text-align: center;
+    position: relative;
+  }
+
+  #question {
+    color: black;
+    font-size: 3vw;
+    max-width: 80vw;
+    line-height: 1.3em;
+    white-space: pre-wrap;
+    margin-bottom: 40px;
+  }
+
+  .glow {
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff77aa, 0 0 15px #ff77aa;
+    animation: pulse 1.5s infinite alternate;
+    display: inline-block;
+  }
+
+  @keyframes pulse {
+    from { text-shadow: 0 0 5px #fff, 0 0 10px #ff77aa, 0 0 15px #ff77aa; }
+    to { text-shadow: 0 0 8px #fff, 0 0 18px #ff77aa, 0 0 25px #ff77aa; }
+  }
+
+  #loveMsg {
+    display: none;
+    font-size: 4vw;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  #signature {
+    display: none;
+    font-size: 2vw;
+    color: black;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  button {
+    font-size: 4vw;
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #ff5a7a;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.5s ease;
+    position: relative;
+    z-index: 2;
+  }
+
+  #flowers, #hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .flower, .heart {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    animation: fall linear infinite, sparkle 1.5s infinite alternate;
+  }
+
+  .heart {
+    width: 40px;
+    height: 40px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1;}
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0;}
+  }
+
+  @keyframes sparkle {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+  }
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<div id="screen">
+  <div id="question"></div>
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+  <div id="loveMsg">I love you, my everything 💕</div>
+  <div id="signature">Your husband Abel</div>
+</div>
+
+<div id="flowers"></div>
+<div id="hearts"></div>
+
+<script>
+const questionText = "Will you be my Valentine, Enu? 💖";
+const questionDiv = document.getElementById('question');
+let i = 0;
+
+// Show question letters with glow
+function typeQuestion() {
+  if (i < questionText.length) {
+    const span = document.createElement('span');
+    span.textContent = questionText[i] + '\n';
+    span.classList.add('glow');
+    questionDiv.appendChild(span);
+    i++;
+    setTimeout(typeQuestion, 120);
+  }
+}
+typeQuestion();
+
+// Elements
+const noBtn = document.getElementById('no');
+const yesBtn = document.getElementById('yes');
+const flowersDiv = document.getElementById('flowers');
+const heartsDiv = document.getElementById('hearts');
+const loveMsg = document.getElementById('loveMsg');
+const signature = document.getElementById('signature');
+
+const flowerColors = [
+  'https://cdn-icons-png.flaticon.com/512/616/616408.png',
+  'https://cdn-icons-png.flaticon.com/512/616/616410.png',
+  'https://cdn-icons-png.flaticon.com/512/616/616411.png',
+];
+
+// No button behavior
+noBtn.addEventListener('mouseenter', () => {
+  noBtn.style.transform = 'scale(0.6)';
+  yesBtn.style.transform = 'scale(1.4)';
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.position = 'absolute';
+  noBtn.style.left = x + 'px';
+  noBtn.style.top = y + 'px';
+});
+
+// Flower creation
+function createFlower() {
+  const flower = document.createElement('div');
+  flower.classList.add('flower');
+  flower.style.left = Math.random() * window.innerWidth + 'px';
+  flower.style.backgroundImage = `url('${flowerColors[Math.floor(Math.random() * flowerColors.length)]}')`;
+  flower.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  flowersDiv.appendChild(flower);
+  setTimeout(() => flower.remove(), 5000);
+}
+
+// Heart creation
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+  heartsDiv.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+// Continuous small flowers
+setInterval(createFlower, 300);
+
+// Yes button magic
+yesBtn.addEventListener('click', () => {
+  questionDiv.style.display = 'none';
+  noBtn.style.display = 'none';
+  yesBtn.style.transform = 'scale(1)';
+  yesBtn.style.display = 'none';
+  loveMsg.style.display = 'block';
+  signature.style.display = 'block';
+
+  const loveMsgRect = loveMsg.getBoundingClientRect();
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.left = loveMsgRect.left + Math.random() * loveMsgRect.width + 'px';
+      flower.style.top = loveMsgRect.top + 'px';
+      flower.style.backgroundImage = `url('${flowerColors[Math.floor(Math.random() * flowerColors.length)]}')`;
+      flower.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      flowersDiv.appendChild(flower);
+      setTimeout(() => flower.remove(), 5000);
+    }, i * 100);
+  }
+});
+</script>
+</body>
+</html>
